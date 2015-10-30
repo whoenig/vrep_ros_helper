@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find vrep_ros_vicon)/launch/rviz.rviz" required="true" />
+
+  <node name="vrep_ros_vicon" pkg="vrep_ros_vicon" type="vrep_ros_vicon" output="screen">
+    <rosparam param = "objects">[create]</rosparam>
+  </node>
+</launch>
