@@ -20,7 +20,8 @@ int main( int argc, char** argv )
   nh.getParam("objects", objectNames);
 
   for (auto& objName : objectNames) {
-    uint32_t handle = vrep.getObjectHandle("create");
+    uint32_t handle = vrep.getObjectHandle(objName);
+    ROS_INFO("%d: '%s'", handle, objName.c_str());
     vrep.enablePublisher("topic", 10, simros_strmcmd_get_transform, handle, -1, "");
   }
 }
