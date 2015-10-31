@@ -2,12 +2,16 @@
 #include <ros/ros.h>
 #include "geometry_msgs/PoseStamped.h"
 
+class VRepImpl;
+
 class VRep
 {
 public:
   VRep();
 
   void startSimulation();
+
+  void stopSimulation();
 
   uint32_t getObjectHandle(
     const std::string& name);
@@ -35,7 +39,19 @@ public:
   void getObjectNames(
     std::vector<std::string>& result);
 
+  uint32_t setJointTargetVelocity(
+    uint32_t handle,
+    double targetVelocity);
+
+  void synchronous(
+    bool enable);
+
+  void synchronousTrigger();
+
+  double getSimulationTime();
+
 private:
   ros::NodeHandle handle_;
+  VRepImpl* impl_;
 
 };
