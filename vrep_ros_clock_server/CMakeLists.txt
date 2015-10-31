@@ -7,6 +7,7 @@ project(vrep_ros_clock_server)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   vrep_ros_common
+  std_msgs
 )
 
 ## System dependencies are found with CMake's conventions

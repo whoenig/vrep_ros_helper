@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include "vrep_ros_common/vrep.h"
 #include <rosgraph_msgs/Clock.h>
+#include <std_msgs/Empty.h>
 #include <signal.h>
 
 VRep* g_pVrep;
@@ -25,6 +26,16 @@ int main( int argc, char** argv )
   signal(SIGINT, mySigintHandler);
 
   ros::Publisher pub = nh.advertise<rosgraph_msgs::Clock>("clock", 10);
+
+  // avoid TF_OLD_DATA error (see http://wiki.ros.org/tf/Errors%20explained#Error:_TF_OLD_DATA)
+  {
+    ros::Publisher pub = nh.advertise<std_msgs::Empty>("/reset_time", 1, true);
+    std_msgs::Empty msg;
+    for (size_t i = 0; i < 100; ++i) {
+      pub.publish(msg);
+      ros::spinOnce();
+    }
+  }
 
   rosgraph_msgs::Clock msg;
 
